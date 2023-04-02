@@ -10,6 +10,7 @@ export function useFormFields(fields) {
 
 	const render = () => {
 		return fields.map((field) => {
+			const isOtherType = field.type !== "checkbox" && field.type !== 'textarea';
 			return (
 				<div className="form-group" key={field.name}>
 					<label className="w-100">
@@ -27,14 +28,25 @@ export function useFormFields(fields) {
 								</div>
 							</>
 						)}
-						{field.type !== "checkbox" && (
+						{field.type === "textarea" && (
 							<>
-								<span>{field.label}</span>
+								<span className={field.labelClass}>{field.label}</span>
+									<textarea
+										name={field.name}
+										children={formData[field.name] ?? false}
+										className={field.inputClass ?? "form-control"}
+										onChange={onChange}
+									/>
+							</>
+						)}
+						{isOtherType && (
+							<>
+								<span className={field.labelClass}>{field.label}</span>
 								<input
 									name={field.name}
 									placeholder={field.placeholder}
 									value={formData[field.name] ?? ""}
-									className="form-control"
+									className={field.inputClass ?? "form-control"}
 									onChange={onChange}
 								/>
 							</>
