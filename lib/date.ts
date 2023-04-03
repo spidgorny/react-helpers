@@ -23,33 +23,33 @@ export function usDate(iso) {
 		month: 'numeric',
 		day: 'numeric',
 		timeZone: 'America/New_York',
-	}
+	} as const
 	return date.toLocaleDateString('en-US', options)
 }
 
 // June 06, 2022
 export function longDate(iso) {
 	const date = new Date(iso)
-	const options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/New_York' }
+	const options = { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/New_York' } as const
 	return date.toLocaleDateString('en-US', options)
 }
 
 // June 06
 export function shortDate(iso) {
 	const date = new Date(iso)
-	const options = { month: 'long', day: 'numeric', timeZone: 'America/New_York' }
+	const options = { month: 'long', day: 'numeric', timeZone: 'America/New_York' } as const
 	return date.toLocaleDateString('en-US', options)
 }
 
 export function isValidDate(d) {
-	return d instanceof Date && !isNaN(d)
+	return !isNaN(d) && d instanceof Date
 }
 
 export function sleepMs(waitTime = 1000) {
 	return new Promise((res) => setTimeout(res, waitTime))
 }
 
-export async function sleepCounter(seconds) {
+export async function sleepCounter(seconds): Promise<void> {
 	return new Promise(async (resolve) => {
 		while (seconds > 0) {
 			processStdoutClearLine()
@@ -65,7 +65,7 @@ export async function sleepCounter(seconds) {
 	})
 }
 
-export function sleep(seconds) {
+export function sleep(seconds): Promise<void> {
 	if (isNaN(seconds)) {
 		console.log('Provided value for seconds to sleep, should be a valid number.')
 		return
