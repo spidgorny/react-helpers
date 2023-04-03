@@ -4,7 +4,7 @@ import {
   processStdoutClearLine,
   processStdoutCursorTo,
   processStdoutWrite,
-} from './console-log-colors.mjs'
+} from './console-log'
 
 export function isoDateInNY(iso) {
 	const date = typeof iso === 'string' ? DateTime.fromISO(iso) : DateTime.fromJSDate(iso)
