@@ -1,6 +1,7 @@
 import os from "os";
+import {ReactElement, ReactNode} from "react";
 
-export function Debug({ children, show, hide }) {
+export function Debug({children, show, hide}: { children: ReactElement, show?: boolean; hide?: boolean }) {
 	if (hide) {
 		return null;
 	}
@@ -39,17 +40,17 @@ export function WithDebug(props) {
 }
 
 
-export function Json({ data }) {
+export function Json({data}) {
 	return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
 
 
-export function JsonDetails({ name, data }) {
+export function JsonDetails({name, data}) {
 	return (
 		<div>
 			<legend className="fs-6">{name ?? "JSON"}</legend>
 			<details>
-				<Json data={data} />
+				<Json data={data}/>
 			</details>
 		</div>
 	);

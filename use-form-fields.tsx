@@ -57,6 +57,8 @@ export function useFormFields(fields) {
 		});
 	};
 
+	const canSubmit = () => !isWorking;
+
 	return {
 		fields,
 		defaultFields,
@@ -65,5 +67,6 @@ export function useFormFields(fields) {
 		onChange,
 		isWorking,
 		wrapWorking,
+		canSubmit
 	};
 }
