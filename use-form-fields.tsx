@@ -10,6 +10,7 @@ interface FieldDesc {
 	placeholder?: string;
 	type?: string;
 	required?: boolean;
+	pattern?: string;
 }
 
 interface Options {
@@ -49,7 +50,7 @@ export function useFormFields(fields: FieldDesc[], options: Options) {
 								<span className={field.labelClass}>{field.label}</span>
 									<textarea
 										name={field.name}
-										children={formData[field.name] ?? false}
+										children={formData[field.name] ?? ""}
 										className={field.inputClass ?? options.inputClass ?? "form-check-input"}
 										onChange={onChange}
 									/>
@@ -64,6 +65,7 @@ export function useFormFields(fields: FieldDesc[], options: Options) {
 									value={formData[field.name] ?? ""}
 									className={field.inputClass ?? options.inputClass ?? "form-check-input"}
 									onChange={onChange}
+									pattern={field.pattern}
 								/>
 							</>
 						)}
