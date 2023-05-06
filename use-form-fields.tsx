@@ -1,7 +1,23 @@
 import { useFormData } from "./use-form-data";
 import { useWorking } from "./use-working";
 
-export function useFormFields(fields) {
+interface FieldDesc {
+	name: string;
+	value?: string;
+	label?: string;
+	inputClass?: string;
+	labelClass?: string;
+	placeholder?: string;
+	type?: string;
+	required?: boolean;
+}
+
+interface Options {
+	wrapClass?: string;
+	inputClass?: string;
+}
+
+export function useFormFields(fields: FieldDesc[], options: Options) {
 	const defaultFields = Object.fromEntries(
 		fields.map((field) => [field.name, field.value])
 	);
@@ -12,7 +28,7 @@ export function useFormFields(fields) {
 		return fields.map((field) => {
 			const isOtherType = field.type !== "checkbox" && field.type !== 'textarea';
 			return (
-				<div className="form-group" key={field.name}>
+				<div className={options.wrapClass ?? "form-group"} key={field.name}>
 					<label className="w-100">
 						{field.type === "checkbox" && (
 							<>
@@ -21,7 +37,7 @@ export function useFormFields(fields) {
 										type="checkbox"
 										name={field.name}
 										checked={formData[field.name] ?? false}
-										className="form-check-input"
+										className={field.inputClass ?? options.inputClass ?? "form-check-input"}
 										onChange={onCheck}
 									/>
 									<span>{field.label}</span>
@@ -34,7 +50,7 @@ export function useFormFields(fields) {
 									<textarea
 										name={field.name}
 										children={formData[field.name] ?? false}
-										className={field.inputClass ?? "form-control"}
+										className={field.inputClass ?? options.inputClass ?? "form-check-input"}
 										onChange={onChange}
 									/>
 							</>
@@ -46,7 +62,7 @@ export function useFormFields(fields) {
 									name={field.name}
 									placeholder={field.placeholder}
 									value={formData[field.name] ?? ""}
-									className={field.inputClass ?? "form-control"}
+									className={field.inputClass ?? options.inputClass ?? "form-check-input"}
 									onChange={onChange}
 								/>
 							</>
