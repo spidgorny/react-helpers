@@ -1,7 +1,7 @@
 import os from "os";
 import {ReactElement, ReactNode} from "react";
 
-export function Debug({children, show, hide}: { children: ReactElement, show?: boolean; hide?: boolean }) {
+export function Debug({children, show, hide, className}: { children: ReactElement, show?: boolean; hide?: boolean; className?: string}) {
 	if (hide) {
 		return null;
 	}
@@ -18,14 +18,14 @@ export function Debug({children, show, hide}: { children: ReactElement, show?: b
 	const isDev = hostname?.includes('ngrok');
 	// console.log({ isDev })
 	if (isDev) {
-		return children
+		return <div className={className}>{children}</div>
 	}
 
 	if (!document?.cookie?.includes("depidsvy")) {
 		return null;
 	}
 
-	return children;
+	return <div className={className}>{children}</div>
 }
 
 export function WithDebug(props) {
