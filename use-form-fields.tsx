@@ -31,7 +31,7 @@ export function useFormFields(fields: FieldDesc[], options?: Options) {
 		return fields.map((field) => {
 			const isOtherType = field.type !== "checkbox" && field.type !== 'textarea';
 			return (
-				<div className={options.wrapClass ?? "form-group"} key={field.name}>
+				<div className={options?.wrapClass ?? "form-group"} key={field.name}>
 					<label className="w-100">
 						{field.type === "checkbox" && (
 							<>
@@ -40,7 +40,7 @@ export function useFormFields(fields: FieldDesc[], options?: Options) {
 										type="checkbox"
 										name={field.name}
 										checked={formData[field.name] ?? false}
-										className={field.inputClass ?? options.inputClass ?? "form-check-input"}
+										className={field.inputClass ?? options?.inputClass ?? "form-check-input"}
 										onChange={onCheck}
 									/>
 									<span>{field.label}</span>
@@ -53,7 +53,7 @@ export function useFormFields(fields: FieldDesc[], options?: Options) {
 									<textarea
 										name={field.name}
 										value={formData[field.name] ?? ""}
-										className={field.inputClass ?? options.inputClass ?? "form-check-input"}
+										className={field.inputClass ?? options?.inputClass ?? "form-check-input"}
 										onChange={onChange}
 									/>
 							</>
@@ -65,7 +65,7 @@ export function useFormFields(fields: FieldDesc[], options?: Options) {
 									name={field.name}
 									placeholder={field.placeholder}
 									value={formData[field.name] ?? ""}
-									className={field.inputClass ?? options.inputClass ?? "form-check-input"}
+									className={field.inputClass ?? options?.inputClass ?? "form-check-input"}
 									onChange={onChange}
 									pattern={field.pattern}
 								/>
@@ -79,6 +79,7 @@ export function useFormFields(fields: FieldDesc[], options?: Options) {
 	};
 
 	const canSubmit = () => !isWorking;
+
 
 	return {
 		fields,

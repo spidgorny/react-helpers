@@ -1,13 +1,13 @@
 import os from "os";
 import {ReactElement, ReactNode} from "react";
 
-export function Debug({children, show, hide, className}: { children: ReactElement, show?: boolean; hide?: boolean; className?: string}) {
+export function Debug({children, show, hide, className}: { children: ReactNode, show?: boolean; hide?: boolean; className?: string}) {
 	if (hide) {
 		return null;
 	}
 
 	if (show) {
-		return children;
+		return <span>{children}</span>;
 	}
 
 	if (typeof document !== 'object') {
