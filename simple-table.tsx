@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import cn from "classnames";
 import PropTypes from "prop-types";
+import {ReactNode} from 'react';
 
 interface SimpleTableProps {
 	isLoading?: boolean;
