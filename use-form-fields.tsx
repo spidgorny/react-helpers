@@ -34,7 +34,6 @@ export function useFormFields(fields: FieldDesc[], options?: Options) {
 			const isOtherType = fieldDesc.type !== "checkbox" && fieldDesc.type !== 'textarea';
 			const fieldValue = formData[fieldDesc.name] ?? "";
 			const stringValue = "formatString" in fieldDesc ? fieldDesc.formatString(fieldValue) : fieldValue;
-			console.log(fieldValue, stringValue);
 
 			return (
 				<div className={options?.wrapClass ?? "form-group"} key={fieldDesc.name}>
