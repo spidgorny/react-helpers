@@ -13,66 +13,72 @@ interface FieldDesc {
 	required?: boolean;
 	pattern?: string;
 	after?: ReactNode;
+	formatString?: (val: any) => string;
 }
 
 interface Options {
 	wrapClass?: string;
 	inputClass?: string;
+	defaultFields?: Record<string, any>
 }
 
 export function useFormFields(fields: FieldDesc[], options?: Options) {
-	const defaultFields = Object.fromEntries(
+	const defaultFields = options?.defaultFields ?? Object.fromEntries(
 		fields.map((field) => [field.name, field.value])
 	);
 	const { formData, onChange, onCheck, setFormKey } = useFormData(defaultFields);
 	const { isWorking, wrapWorking } = useWorking(false);
 
 	const render = () => {
-		return fields.map((field) => {
-			const isOtherType = field.type !== "checkbox" && field.type !== 'textarea';
+		return fields.map((fieldDesc) => {
+			const isOtherType = fieldDesc.type !== "checkbox" && fieldDesc.type !== 'textarea';
+			const fieldValue = formData[fieldDesc.name] ?? "";
+			const stringValue = "formatString" in fieldDesc ? fieldDesc.formatString(fieldValue) : fieldValue;
+			console.log(fieldValue, stringValue);
+
 			return (
-				<div className={options?.wrapClass ?? "form-group"} key={field.name}>
+				<div className={options?.wrapClass ?? "form-group"} key={fieldDesc.name}>
 					<label className="w-100">
-						{field.type === "checkbox" && (
+						{fieldDesc.type === "checkbox" && (
 							<>
 								<div className="d-flex gap-2">
 									<input
 										type="checkbox"
-										name={field.name}
-										checked={formData[field.name] ?? false}
-										className={field.inputClass ?? options?.inputClass ?? "form-check-input"}
+										name={fieldDesc.name}
+										checked={formData[fieldDesc.name] ?? false}
+										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
 										onChange={onCheck}
 									/>
-									<span>{field.label}</span>
+									<span>{fieldDesc.label}</span>
 								</div>
 							</>
 						)}
-						{field.type === "textarea" && (
+						{fieldDesc.type === "textarea" && (
 							<>
-								<span className={field.labelClass}>{field.label}</span>
+								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
 									<textarea
-										name={field.name}
-										value={formData[field.name] ?? ""}
-										className={field.inputClass ?? options?.inputClass ?? "form-check-input"}
+										name={fieldDesc.name}
+										value={formData[fieldDesc.name] ?? ""}
+										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
 										onChange={onChange}
 									/>
 							</>
 						)}
 						{isOtherType && (
 							<>
-								<span className={field.labelClass}>{field.label}</span>
+								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
 								<input
-									name={field.name}
-									placeholder={field.placeholder}
-									value={formData[field.name] ?? ""}
-									className={field.inputClass ?? options?.inputClass ?? "form-check-input"}
+									name={fieldDesc.name}
+									placeholder={fieldDesc.placeholder}
+									value={stringValue}
+									className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
 									onChange={onChange}
-									pattern={field.pattern}
+									pattern={fieldDesc.pattern}
 								/>
 							</>
 						)}
 					</label>
-					{field?.after}
+					{fieldDesc?.after}
 				</div>
 			);
 		});
