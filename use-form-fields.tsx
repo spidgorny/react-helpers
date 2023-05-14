@@ -52,7 +52,7 @@ export function useFormFields(fields: FieldDesc[], options?: Options) {
 								<span className={field.labelClass}>{field.label}</span>
 									<textarea
 										name={field.name}
-										children={formData[field.name] ?? ""}
+										value={formData[field.name] ?? ""}
 										className={field.inputClass ?? options.inputClass ?? "form-check-input"}
 										onChange={onChange}
 									/>
