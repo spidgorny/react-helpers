@@ -1,5 +1,6 @@
 import { useFormData } from "./use-form-data";
 import { useWorking } from "./use-working";
+import {ReactNode} from 'react';
 
 interface FieldDesc {
 	name: string;
@@ -11,6 +12,7 @@ interface FieldDesc {
 	type?: string;
 	required?: boolean;
 	pattern?: string;
+	after?: ReactNode;
 }
 
 interface Options {
@@ -22,7 +24,7 @@ export function useFormFields(fields: FieldDesc[], options: Options) {
 	const defaultFields = Object.fromEntries(
 		fields.map((field) => [field.name, field.value])
 	);
-	const { formData, onChange, onCheck } = useFormData(defaultFields);
+	const { formData, onChange, onCheck, setFormKey } = useFormData(defaultFields);
 	const { isWorking, wrapWorking } = useWorking(false);
 
 	const render = () => {
@@ -70,6 +72,7 @@ export function useFormFields(fields: FieldDesc[], options: Options) {
 							</>
 						)}
 					</label>
+					{field?.after}
 				</div>
 			);
 		});
@@ -85,6 +88,7 @@ export function useFormFields(fields: FieldDesc[], options: Options) {
 		onChange,
 		isWorking,
 		wrapWorking,
-		canSubmit
+		canSubmit,
+		setFormKey
 	};
 }
