@@ -20,7 +20,7 @@ interface Options {
 	inputClass?: string;
 }
 
-export function useFormFields(fields: FieldDesc[], options: Options) {
+export function useFormFields(fields: FieldDesc[], options?: Options) {
 	const defaultFields = Object.fromEntries(
 		fields.map((field) => [field.name, field.value])
 	);
