@@ -2,7 +2,17 @@ import React, { Fragment } from "react";
 import cn from "classnames";
 import PropTypes from "prop-types";
 
-export function SimpleTable({ className, columns, rows, onOpen, onRowClick, evenRow }) {
+interface SimpleTableProps {
+	isLoading?: boolean;
+	className?: string;
+	columns: any[];
+	rows: any[];
+	onOpen?: (row: any, index: number) => ReactNode;
+	onRowClick?: (e: any, row: any) => void;
+	evenRow?: (row: any) => ReactNode;
+}
+
+export function SimpleTable({className, columns, rows, onOpen, onRowClick, evenRow, isLoading}: SimpleTableProps) {
 	// console.log({ rows, columns });
 
 	if (!rows) {
