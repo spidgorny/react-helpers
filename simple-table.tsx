@@ -1,20 +1,8 @@
-// noinspection CheckTagEmptyBody
-
-import React, {Fragment, ReactNode} from "react";
+import React, { Fragment } from "react";
 import cn from "classnames";
 import PropTypes from "prop-types";
 
-interface SimpleTableProps {
-	isLoading?: boolean;
-	className?: string;
-	columns: any[];
-	rows: any[];
-	onOpen?: (row: any, index: number) => ReactNode;
-	onRowClick?: (e: any, row: any) => void;
-	evenRow?: (row: any) => ReactNode;
-}
-
-export function SimpleTable({className, columns, rows, onOpen, onRowClick, evenRow, isLoading}: SimpleTableProps) {
+export function SimpleTable({ className, columns, rows, onOpen, onRowClick, evenRow }) {
 	// console.log({ rows, columns });
 
 	if (!rows) {
@@ -33,7 +21,7 @@ export function SimpleTable({className, columns, rows, onOpen, onRowClick, evenR
 		<table className={className ?? "table table-striped table-bordered table-sm w-full"}>
 			<thead>
 			<tr>
-				{onOpen && <th/>}
+				{onOpen && <th />}
 				{columns.map((x, index) => (
 					<th key={index} className="text-center">
 						{x.name}
@@ -42,9 +30,6 @@ export function SimpleTable({className, columns, rows, onOpen, onRowClick, evenR
 			</tr>
 			</thead>
 			<tbody>
-			{isLoading && <tr>
-				<td colSpan={99}>Loading...</td>
-			</tr>}
 			{rows.map((row, index) => (
 				<Fragment key={index}>
 					<tr
@@ -94,7 +79,7 @@ SimpleTable.propTypes = {
 	evenRow: PropTypes.func,
 };
 
-export function PropRow({name, children, className = "py-1"}) {
+export function PropRow({ name, children, className = "py-1" }) {
 	return (
 		<tr>
 			<th className={className}>{name}</th>
