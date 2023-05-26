@@ -22,7 +22,7 @@ interface Options {
 	defaultFields?: Record<string, any>
 }
 
-export function useFormFields(fields: FieldDesc[], options?: Options) {
+export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 	const defaultFields = options?.defaultFields ?? Object.fromEntries(
 		fields.map((field) => [field.name, field.value])
 	);
