@@ -73,6 +73,7 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 									className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
 									onChange={onChange}
 									pattern={fieldDesc.pattern}
+									type={fieldDesc.type   ??'text'}
 								/>
 							</>
 						)}
