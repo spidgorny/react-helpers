@@ -78,6 +78,7 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 								onChange={onChange}
 								formData={formData}
 								options={options}
+								setFormKey={setFormKey}
 							/>
 						)}
 						{isOtherType && (
@@ -168,11 +169,17 @@ function FormSelect({ formData, fieldDesc, options, onChange }: OneTypeProps) {
 	);
 }
 
-function FormRender({ formData, fieldDesc, options, onChange }: OneTypeProps) {
+function FormRender({
+	formData,
+	fieldDesc,
+	options,
+	onChange,
+	setFormKey,
+}: OneTypeProps & { setFormKey: (string, any) => void }) {
 	return (
 		<>
 			<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
-			{fieldDesc.render!({ fieldDesc, formData, options, onChange })}
+			{fieldDesc.render!({ fieldDesc, formData, options, onChange, setFormKey })}
 		</>
 	);
 }
