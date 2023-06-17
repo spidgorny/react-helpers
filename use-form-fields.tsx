@@ -1,6 +1,7 @@
 import { useFormData } from "./use-form-data";
 import { useWorking } from "./use-working";
 import {ReactNode} from 'react';
+import {SelectWithOptions} from 'react-helpers/select-with-options';
 
 interface FieldDesc {
 	name: string;
@@ -56,6 +57,17 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 							<>
 								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
 									<textarea
+										name={fieldDesc.name}
+										value={formData[fieldDesc.name] ?? ""}
+										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
+										onChange={onChange}
+									/>
+							</>
+						)}
+						{fieldDesc.type === "select" && (
+							<>
+								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
+									<SelectWithOptions
 										name={fieldDesc.name}
 										value={formData[fieldDesc.name] ?? ""}
 										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
