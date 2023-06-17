@@ -1,7 +1,7 @@
 import { useFormData } from "./use-form-data";
 import { useWorking } from "./use-working";
-import { SelectWithOptions} from "./select-with-options";
-import {ReactNode} from 'react';
+import { SelectWithOptions } from "./select-with-options";
+import { ReactNode } from "react";
 
 interface FieldDesc {
 	name: string;
@@ -16,25 +16,28 @@ interface FieldDesc {
 	after?: ReactNode;
 	formatString?: (val: any) => string;
 	options?: object | [string, string][];
-	render?: ()=>ReactNode;
+	render?: () => ReactNode;
 }
 
 interface Options {
 	wrapClass?: string;
 	inputClass?: string;
-	defaultFields?: Record<string, any>
+	defaultFields?: Record<string, any>;
 }
 
 export function useFormFields(fields: FieldDesc[], options: Options = {}) {
-	const defaultFields = options?.defaultFields ?? Object.fromEntries(
-		fields.map((field) => [field.name, field.value])
-	);
+	const defaultFields =
+		options?.defaultFields ?? Object.fromEntries(fields.map((field) => [field.name, field.value]));
 	const { formData, onChange, onCheck, setFormKey } = useFormData(defaultFields);
 	const { isWorking, wrapWorking } = useWorking(false);
 
 	const render = () => {
 		return fields.map((fieldDesc) => {
-			const isOtherType = fieldDesc.type !== "checkbox" && fieldDesc.type !== 'textarea' && fieldDesc.type !== 'select' && fieldDesc.type !== 'render';
+			const isOtherType =
+				fieldDesc.type !== "checkbox" &&
+				fieldDesc.type !== "textarea" &&
+				fieldDesc.type !== "select" &&
+				fieldDesc.type !== "render";
 
 			return (
 				<div className={options?.wrapClass ?? "form-group"} key={fieldDesc.name}>
@@ -54,16 +57,36 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 							</>
 						)}
 						{fieldDesc.type === "textarea" && (
-							<FormTextarea fieldDesc={fieldDesc} onChange={onChange} formData={formData} options={options}></FormTextarea>
+							<FormTextarea
+								fieldDesc={fieldDesc}
+								onChange={onChange}
+								formData={formData}
+								options={options}
+							></FormTextarea>
 						)}
 						{fieldDesc.type === "select" && (
-							<FormSelect fieldDesc={fieldDesc} onChange={onChange} formData={formData} options={options}/>
+							<FormSelect
+								fieldDesc={fieldDesc}
+								onChange={onChange}
+								formData={formData}
+								options={options}
+							/>
 						)}
 						{fieldDesc.type === "render" && (
-							<FormRender fieldDesc={fieldDesc} onChange={onChange} formData={formData} options={options}/>
+							<FormRender
+								fieldDesc={fieldDesc}
+								onChange={onChange}
+								formData={formData}
+								options={options}
+							/>
 						)}
 						{isOtherType && (
-							<FormInput fieldDesc={fieldDesc} onChange={onChange} formData={formData} options={options}/>
+							<FormInput
+								fieldDesc={fieldDesc}
+								onChange={onChange}
+								formData={formData}
+								options={options}
+							/>
 						)}
 					</label>
 					{fieldDesc?.after}
@@ -74,7 +97,6 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 
 	const canSubmit = () => !isWorking;
 
-
 	return {
 		fields,
 		defaultFields,
@@ -84,55 +106,66 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 		isWorking,
 		wrapWorking,
 		canSubmit,
-		setFormKey
+		setFormKey,
 	};
 }
 
-function FormInput({formData, fieldDesc, options, onChange}) {
-			const fieldValue = formData[fieldDesc.name] ?? "";
-			const stringValue = "formatString" in fieldDesc && fieldDesc.formatString ? fieldDesc.formatString(fieldValue) : fieldValue;
-	return 							<>
-								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
-								<input
-									name={fieldDesc.name}
-									placeholder={fieldDesc.placeholder}
-									value={stringValue}
-									className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
-									onChange={onChange}
-									pattern={fieldDesc.pattern}
-									type={fieldDesc.type   ??'text'}
-								/>
-							</>
-
+function FormInput({ formData, fieldDesc, options, onChange }) {
+	const fieldValue = formData[fieldDesc.name] ?? "";
+	const stringValue =
+		"formatString" in fieldDesc && fieldDesc.formatString
+			? fieldDesc.formatString(fieldValue)
+			: fieldValue;
+	return (
+		<>
+			<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
+			<input
+				name={fieldDesc.name}
+				placeholder={fieldDesc.placeholder}
+				value={stringValue}
+				className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
+				onChange={onChange}
+				pattern={fieldDesc.pattern}
+				type={fieldDesc.type ?? "text"}
+			/>
+		</>
+	);
 }
 
-function FormTextarea({formData, fieldDesc, options, onChange}) {
-	return <>
-								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
-									<textarea
-										name={fieldDesc.name}
-										value={formData[fieldDesc.name] ?? ""}
-										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
-										onChange={onChange}
-									/>
-							</>
+function FormTextarea({ formData, fieldDesc, options, onChange }) {
+	return (
+		<>
+			<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
+			<textarea
+				name={fieldDesc.name}
+				value={formData[fieldDesc.name] ?? ""}
+				className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
+				onChange={onChange}
+			/>
+		</>
+	);
 }
 
-function FormSelect({formData, fieldDesc, options, onChange}) {
-	return <>
-								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
-									<SelectWithOptions
-										name={fieldDesc.name}
-										value={formData[fieldDesc.name] ?? ""}
-										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
-										onChange={onChange}
-									/>
-							</>
+function FormSelect({ formData, fieldDesc, options, onChange }) {
+	return (
+		<>
+			<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
+			<SelectWithOptions
+				name={fieldDesc.name}
+				value={formData[fieldDesc.name] ?? ""}
+				className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
+				onChange={onChange}
+				options={fieldDesc.options}
+			/>
+		</>
+	);
 }
 
-function FormRender({formData, fieldDesc, options, onChange}) {
-	return <>
-								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
-		{fieldDesc.render({fieldDesc, formData, options, onChange})}
-							</>
+function FormRender({ formData, fieldDesc, options, onChange }) {
+	return (
+		<>
+			<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
+			{fieldDesc.render({ fieldDesc, formData, options, onChange })}
+		</>
+	);
 }
