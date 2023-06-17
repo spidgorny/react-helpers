@@ -34,9 +34,7 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 
 	const render = () => {
 		return fields.map((fieldDesc) => {
-			const isOtherType = fieldDesc.type !== "checkbox" && fieldDesc.type !== 'textarea';
-			const fieldValue = formData[fieldDesc.name] ?? "";
-			const stringValue = "formatString" in fieldDesc && fieldDesc.formatString ? fieldDesc.formatString(fieldValue) : fieldValue;
+			const isOtherType = fieldDesc.type !== "checkbox" && fieldDesc.type !== 'textarea' && fieldDesc.type !== 'select' && fieldDesc.type !== 'render';
 
 			return (
 				<div className={options?.wrapClass ?? "form-group"} key={fieldDesc.name}>
@@ -56,32 +54,16 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 							</>
 						)}
 						{fieldDesc.type === "textarea" && (
-							<>
-								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
-									<textarea
-										name={fieldDesc.name}
-										value={formData[fieldDesc.name] ?? ""}
-										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
-										onChange={onChange}
-									/>
-							</>
+							<FormTextarea fieldDesc={fieldDesc} onChange={onChange} formData={formData} options={options}></FormTextarea>
 						)}
 						{fieldDesc.type === "select" && (
 							<FormSelect fieldDesc={fieldDesc} onChange={onChange} formData={formData} options={options}/>
 						)}
+						{fieldDesc.type === "render" && (
+							<FormRender fieldDesc={fieldDesc} onChange={onChange} formData={formData} options={options}/>
+						)}
 						{isOtherType && (
-							<>
-								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
-								<input
-									name={fieldDesc.name}
-									placeholder={fieldDesc.placeholder}
-									value={stringValue}
-									className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
-									onChange={onChange}
-									pattern={fieldDesc.pattern}
-									type={fieldDesc.type   ??'text'}
-								/>
-							</>
+							<FormInput fieldDesc={fieldDesc} onChange={onChange} formData={formData} options={options}/>
 						)}
 					</label>
 					{fieldDesc?.after}
@@ -106,6 +88,36 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 	};
 }
 
+function FormInput({formData, fieldDesc, options, onChange}) {
+			const fieldValue = formData[fieldDesc.name] ?? "";
+			const stringValue = "formatString" in fieldDesc && fieldDesc.formatString ? fieldDesc.formatString(fieldValue) : fieldValue;
+	return 							<>
+								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
+								<input
+									name={fieldDesc.name}
+									placeholder={fieldDesc.placeholder}
+									value={stringValue}
+									className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
+									onChange={onChange}
+									pattern={fieldDesc.pattern}
+									type={fieldDesc.type   ??'text'}
+								/>
+							</>
+
+}
+
+function FormTextarea({formData, fieldDesc, options, onChange}) {
+	return <>
+								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
+									<textarea
+										name={fieldDesc.name}
+										value={formData[fieldDesc.name] ?? ""}
+										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
+										onChange={onChange}
+									/>
+							</>
+}
+
 function FormSelect({formData, fieldDesc, options, onChange}) {
 	return <>
 								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
@@ -115,5 +127,12 @@ function FormSelect({formData, fieldDesc, options, onChange}) {
 										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
 										onChange={onChange}
 									/>
+							</>
+}
+
+function FormRender({formData, fieldDesc, options, onChange}) {
+	return <>
+								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
+		{fieldDesc.render({fieldDesc, formData, options, onChange})}
 							</>
 }
