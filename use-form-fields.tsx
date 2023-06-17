@@ -1,7 +1,7 @@
 import { useFormData } from "./use-form-data";
 import { useWorking } from "./use-working";
+import { SelectWithOptions} from "./select-with-options";
 import {ReactNode} from 'react';
-import {SelectWithOptions} from 'react-helpers/select-with-options';
 
 interface FieldDesc {
 	name: string;
@@ -15,6 +15,8 @@ interface FieldDesc {
 	pattern?: string;
 	after?: ReactNode;
 	formatString?: (val: any) => string;
+	options?: object | [string, string][];
+	render?: ()=>ReactNode;
 }
 
 interface Options {
@@ -65,15 +67,7 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 							</>
 						)}
 						{fieldDesc.type === "select" && (
-							<>
-								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
-									<SelectWithOptions
-										name={fieldDesc.name}
-										value={formData[fieldDesc.name] ?? ""}
-										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
-										onChange={onChange}
-									/>
-							</>
+							<FormSelect fieldDesc={fieldDesc} onChange={onChange} formData={formData} options={options}/>
 						)}
 						{isOtherType && (
 							<>
@@ -110,4 +104,16 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 		canSubmit,
 		setFormKey
 	};
+}
+
+function FormSelect({formData, fieldDesc, options, onChange}) {
+	return <>
+								<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
+									<SelectWithOptions
+										name={fieldDesc.name}
+										value={formData[fieldDesc.name] ?? ""}
+										className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
+										onChange={onChange}
+									/>
+							</>
 }
