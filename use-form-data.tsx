@@ -1,15 +1,15 @@
 import { useState } from "react";
 
 export function useFormData(initialState) {
-	const [formData, setFormData] = useState(initialState);
+	const [formData, setFormData] = useState<Record<string, any>>(initialState);
 
-	const onChange = (e) => {
+	const onChange = (e): Record<string, any> => {
 		let newFormData = { ...formData, [e.target.name]: e.target.value };
 		setFormData(newFormData);
 		return newFormData;
 	};
 
-	const onCheck = (e) => {
+	const onCheck = (e): Record<string, any> => {
 		let newFormData = { ...formData, [e.target.name]: e.target.checked };
 		setFormData(newFormData);
 		return newFormData;
@@ -19,7 +19,7 @@ export function useFormData(initialState) {
 		return formData;
 	};
 
-	const setFormKey = (key, val) => {
+	const setFormKey = (key: string, val: any) => {
 		setFormData({
 			...formData,
 			[key]: val,
