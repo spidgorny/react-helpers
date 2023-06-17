@@ -16,7 +16,7 @@ interface FieldDesc {
 	after?: ReactNode;
 	formatString?: (val: any) => string;
 	options?: object | [string, string][];
-	render?: () => ReactNode;
+	render?: (OneTypeProps) => ReactNode;
 }
 
 interface Options {
@@ -110,7 +110,14 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 	};
 }
 
-function FormInput({ formData, fieldDesc, options, onChange }) {
+export interface OneTypeProps {
+	fieldDesc: FieldDesc;
+	formData: Record<string, string>;
+	options: Options;
+	onChange: () => void;
+}
+
+function FormInput({ formData, fieldDesc, options, onChange }: OneTypeProps) {
 	const fieldValue = formData[fieldDesc.name] ?? "";
 	const stringValue =
 		"formatString" in fieldDesc && fieldDesc.formatString
@@ -132,7 +139,7 @@ function FormInput({ formData, fieldDesc, options, onChange }) {
 	);
 }
 
-function FormTextarea({ formData, fieldDesc, options, onChange }) {
+function FormTextarea({ formData, fieldDesc, options, onChange }: OneTypeProps) {
 	return (
 		<>
 			<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
@@ -146,7 +153,7 @@ function FormTextarea({ formData, fieldDesc, options, onChange }) {
 	);
 }
 
-function FormSelect({ formData, fieldDesc, options, onChange }) {
+function FormSelect({ formData, fieldDesc, options, onChange }: OneTypeProps) {
 	return (
 		<>
 			<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
@@ -161,11 +168,11 @@ function FormSelect({ formData, fieldDesc, options, onChange }) {
 	);
 }
 
-function FormRender({ formData, fieldDesc, options, onChange }) {
+function FormRender({ formData, fieldDesc, options, onChange }: OneTypeProps) {
 	return (
 		<>
 			<span className={fieldDesc.labelClass}>{fieldDesc.label}</span>
-			{fieldDesc.render({ fieldDesc, formData, options, onChange })}
+			{fieldDesc.render!({ fieldDesc, formData, options, onChange })}
 		</>
 	);
 }
