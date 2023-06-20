@@ -1,7 +1,7 @@
 import { useFormData } from "./use-form-data";
 import { useWorking } from "./use-working";
 import { SelectWithOptions } from "./select-with-options";
-import { ReactNode } from "react";
+import { ChangeEvent, ReactNode } from "react";
 
 interface FieldDesc {
 	name: string;
@@ -115,7 +115,7 @@ export interface OneTypeProps {
 	fieldDesc: FieldDesc;
 	formData: Record<string, string>;
 	options: Options;
-	onChange: () => void;
+	onChange: (e: ChangeEvent) => any;
 }
 
 function FormInput({ formData, fieldDesc, options, onChange }: OneTypeProps) {
