@@ -66,7 +66,7 @@ export async function sleepCounter(seconds): Promise<void> {
 	});
 }
 
-export function sleep(seconds): Promise<void> {
+export function sleep(seconds): Promise<void> | undefined {
 	if (isNaN(seconds)) {
 		console.log("Provided value for seconds to sleep, should be a valid number.");
 		return;
