@@ -135,6 +135,7 @@ function FormInput({ formData, fieldDesc, options, onChange }: OneTypeProps) {
 				className={fieldDesc.inputClass ?? options?.inputClass ?? "form-check-input"}
 				onChange={onChange}
 				pattern={fieldDesc.pattern}
+				required={fieldDesc.required}
 				type={fieldDesc.type ?? "text"}
 				{...fieldDesc.inputProps}
 			/>

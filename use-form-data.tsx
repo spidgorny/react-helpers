@@ -20,10 +20,10 @@ export function useFormData(initialState) {
 	};
 
 	const setFormKey = (key: string, val: any) => {
-		setFormData({
+		setFormData((formData) => ({
 			...formData,
 			[key]: val,
-		});
+		}));
 	};
 
 	return {
