@@ -17,6 +17,7 @@ interface FieldDesc {
 	formatString?: (val: any) => string;
 	options?: object | [string, string][];
 	render?: (OneTypeProps) => ReactNode;
+	inputProps?: any;
 }
 
 interface Options {
@@ -135,6 +136,7 @@ function FormInput({ formData, fieldDesc, options, onChange }: OneTypeProps) {
 				onChange={onChange}
 				pattern={fieldDesc.pattern}
 				type={fieldDesc.type ?? "text"}
+				{...fieldDesc.inputProps}
 			/>
 		</>
 	);
