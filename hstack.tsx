@@ -24,15 +24,20 @@ export function HStack({
     <div
       // gap={gap ?? 3}
       className={cn(
-        "flex flex-row",
+        "flex flex-row d-flex",
         className ?? "justify-between",
         gap && "gap-" + gap,
         {
           "justify-start": start,
+          "justify-content-start": start,
           "justify-between": between,
+          "justify-content-between": between,
           "justify-end": end,
+          "justify-content-end": end,
           "items-start": top,
+          "align-items-start": top,
           "items-end": bottom,
+          "align-items-end": bottom,
         }
       )}
     >
