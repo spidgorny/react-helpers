@@ -28,7 +28,7 @@ export function useStateObj<T>(defaultValue: T | undefined = undefined): StateOb
 	const reset = () => set(defaultValue as T);
 	const toggle = () => set(!value as T);
 	const append = (item) => {
-		console.log("append", item, "to", (value as string[]).length, "rows");
+		// console.log("append", item, "to", (value as string[]).length, "rows");
 		set((value) => [...(value as T[]), item] as T);
 	};
 
