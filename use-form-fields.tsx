@@ -97,13 +97,7 @@ export function useFormFields(fields: FieldDesc[], options: Options = {}) {
 		});
 	};
 
-	const canSubmit = () => {
-		if (isWorking) {
-			return false;
-		};
-		const requiredFields = fields.filter((desc) => desc.required);
-		return requiredFields.every(({name}) => formData[name]?.length)
-	}
+	const canSubmit = () => !isWorking;
 
 	return {
 		fields,
