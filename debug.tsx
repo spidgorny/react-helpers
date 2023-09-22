@@ -1,5 +1,5 @@
 import os from "os";
-import {ReactElement, ReactNode} from "react";
+import {PropsWithChildren, ReactElement, ReactNode} from "react";
 
 export function Debug({children, show, hide, className}: { children: ReactNode, show?: boolean; hide?: boolean; className?: string}) {
 	if (hide) {
@@ -28,7 +28,7 @@ export function Debug({children, show, hide, className}: { children: ReactNode, 
 	return <div className={className}>{children}</div>
 }
 
-export function WithDebug(props) {
+export function WithDebug(props: PropsWithChildren<{show?: boolean}>) {
 	if (props.show === false) {
 		return null;
 	}
@@ -40,8 +40,8 @@ export function WithDebug(props) {
 }
 
 
-export function Json({data}) {
-	return <pre>{JSON.stringify(data, null, 2)}</pre>;
+export function Json({data}:{data: any}) {
+	return <pre style={{whiteSpace: 'pre-wrap'}}>{JSON.stringify(data, null, 2)}</pre>;
 }
 
 
