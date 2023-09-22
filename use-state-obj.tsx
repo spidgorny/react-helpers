@@ -27,16 +27,13 @@ export function useStateObj<T>(defaultValue: T | undefined = undefined): StateOb
 	const setFalse = () => set(false as T);
 	const reset = () => set(defaultValue as T);
 	const toggle = () => set(!value as T);
-	const append = (item: T) => {
-		// console.log("append", item, "to", (value as string[]).length, "rows");
+	const append = (item) => {
+		console.log("append", item, "to", (value as string[]).length, "rows");
 		set((value) => [...(value as T[]), item] as T);
 	};
 
-	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		set(event.target.value as T);
-	};
-	const onChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-		set(event.target.checked as T);
+	const onChange = (event) => {
+		set(event.target.value);
 	};
 
 	return {
@@ -49,7 +46,6 @@ export function useStateObj<T>(defaultValue: T | undefined = undefined): StateOb
 		reset,
 		toggle,
 		onChange,
-		onChecked,
 		append,
 	};
 }
@@ -63,7 +59,6 @@ export interface StateObj<T> {
 	setFalse: () => void;
 	reset: () => void;
 	toggle: () => void;
-	append: (item: T) => void;
+	append: (item) => void;
 	onChange: (event: ChangeEvent) => void;
-	onChecked: (event: ChangeEvent) => void;
 }
