@@ -1,4 +1,4 @@
-export function getTabsWithPrimaryFirst(rows: {tab: string}) {
+export function getTabsWithPrimaryFirst(rows: {tab: string}[]) {
 	let PRIMARY = "Primary";
 	const primaryInfo = rows?.find((x) => x.tab === PRIMARY);
 	let tabs = [
