@@ -64,6 +64,6 @@ export interface StateObj<T> {
 	reset: () => void;
 	toggle: () => void;
 	append: (item: T) => void;
-	onChange: (event: ChangeEvent) => void;
-	onChecked: (event: ChangeEvent) => void;
+	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	onChecked: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
