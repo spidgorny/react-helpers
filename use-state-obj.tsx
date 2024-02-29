@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { useState } from "react";
 
 export function useStateObj<T>(defaultValue: T | undefined = undefined): StateObj<T> {
 	const [value, set] = useState<T | undefined>(defaultValue);
