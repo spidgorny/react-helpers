@@ -38,18 +38,18 @@ export function arraySum(list = [], selector: (x: any) => number) {
 	return list.reduce((a, x) => a + selector(x), 0);
 }
 
-export function arraySort(items: any[], selector: (x: any) => number) {
+export function arraySort(items: any[], selector: (x: any) => number|string) {
 	items = items?.sort(sortBy(selector));
 	return items;
 }
 
-export function arraySorBToA(items: any[], selector: (x: any) => number) {
+export function arraySorBToA(items: any[], selector: (x: any) => number|string) {
 	items = items.sort(sortBy(selector));
 	items = items.reverse();
 	return items;
 }
 
-export function sortBy(selector: (row: any) => number) {
+export function sortBy(selector: (row: any) => number|string|Date) {
 	return (a: any, b: any) => {
 		a = selector(a);
 		b = selector(b);
