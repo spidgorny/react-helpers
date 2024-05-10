@@ -40,12 +40,12 @@ export function WithDebug(props: PropsWithChildren<{show?: boolean}>) {
 }
 
 
-export function Json({data}:{data: any}) {
+export function Json({data}: {data: any}) {
 	return <pre style={{whiteSpace: 'pre-wrap'}}>{JSON.stringify(data, null, 2)}</pre>;
 }
 
 
-export function JsonDetails({name, data}) {
+export function JsonDetails({name, data}: {name: string; data: any}) {
 	return (
 		<div>
 			<legend className="fs-6">{name ?? "JSON"}</legend>
