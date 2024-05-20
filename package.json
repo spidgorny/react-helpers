@@ -2,6 +2,9 @@
   "name": "spidgorny-react-helpers",
   "version": "1.0.6",
   "dependencies": {
-    "luxon": "^3.4"
+    "luxon": "^3.4",
+    "chalk": "^5.3.0",
+    "classnames": "^2.5.1",
+    "react-bootstrap": "^2.10.2"
   }
 }
