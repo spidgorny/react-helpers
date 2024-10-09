@@ -1,6 +1,6 @@
 {
   "name": "spidgorny-react-helpers",
-  "version": "1.0.6",
+  "version": "1.0.10",
   "dependencies": {
     "luxon": "^3.4",
     "chalk": "^5.3.0",
