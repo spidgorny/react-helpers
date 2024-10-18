@@ -1,4 +1,4 @@
-import { useWorking } from "spidgorny-react-helpers/use-working.tsx";
+import { useWorking } from "./use-working.tsx";
 import { useCallback, useState } from "react";
 
 export function useAsyncWorking(code: (e: any) => Promise<any>) {
