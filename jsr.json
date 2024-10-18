@@ -1,0 +1,5 @@
+{
+  "name": "@spidgorny/react-helpers",
+  "version": "0.10.0",
+  "exports": "./mod.ts"
+}
