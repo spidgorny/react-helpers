@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 
-export function useFormData(initialState: Record<string, any>) {
-	const [formData, setFormData] = useState<Record<string, any>>(initialState);
+export function useFormData<T extends Record<string, any>>(initialState: T) {
+	const [formData, setFormData] = useState<T>(initialState);
 
 	const onChange = (e: ChangeEvent<HTMLInputElement>): Record<string, any> => {
 		let newFormData = { ...formData, [e.target.name]: e.target.value };
