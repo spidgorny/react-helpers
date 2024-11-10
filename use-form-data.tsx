@@ -3,13 +3,13 @@ import { ChangeEvent, useState } from "react";
 export function useFormData<T extends Record<string, any>>(initialState: T) {
 	const [formData, setFormData] = useState<T>(initialState);
 
-	const onChange = (e: ChangeEvent<HTMLInputElement>): Record<string, any> => {
+	const onChange = (e: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>): T => {
 		let newFormData = { ...formData, [e.target.name]: e.target.value };
 		setFormData(newFormData);
 		return newFormData;
 	};
 
-	const onCheck = (e: ChangeEvent<HTMLInputElement>): Record<string, any> => {
+	const onCheck = (e: ChangeEvent<HTMLInputElement>): T => {
 		let newFormData = { ...formData, [e.target.name]: e.target.checked };
 		setFormData(newFormData);
 		return newFormData;
