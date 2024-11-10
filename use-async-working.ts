@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 
 export function useAsyncWorking(code: (e: any) => Promise<any>) {
 	const { isWorking, setWorking, wrapWorking } = useWorking();
-	const [error, setError] = useState();
+	const [error, setError] = useState<Error|null>(null);
 	const workingCode = wrapWorking(code);
 
 	let run = useCallback(async (e: any) => {
