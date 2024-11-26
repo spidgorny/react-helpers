@@ -3,7 +3,7 @@ import { useWorking } from "./use-working";
 import { SelectWithOptions } from "./select-with-options";
 import { ChangeEvent, ReactNode } from "react";
 
-interface FieldDesc {
+export interface FieldDesc {
 	name: string;
 	value?: string;
 	label?: string;
@@ -20,7 +20,7 @@ interface FieldDesc {
 	inputProps?: any;
 }
 
-interface Options {
+export interface Options {
 	wrapClass?: string;
 	inputClass?: string;
 	defaultFields?: Record<string, any>;
