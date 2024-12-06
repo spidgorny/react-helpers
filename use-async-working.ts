@@ -11,7 +11,7 @@ export function useAsyncWorking(code: (e: any) => Promise<any>) {
 			setError(null);
 			return await workingCode(e);
 		} catch (e) {
-			setError(e);
+			setError(e as Error);
 			setWorking(false);
 		}
 	}, []);
