@@ -38,10 +38,14 @@ export function useStateObj<T>(defaultValue: T | undefined = undefined): StateOb
 	const onChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
 		set(event.target.checked as T);
 	};
+	const setCallback = (setter: (oldValue: T) => T) => {
+		set(setter);
+	};
 
 	return {
 		value,
 		set,
+		setCallback,
 		increment,
 		decrement,
 		setTrue,
@@ -57,6 +61,7 @@ export function useStateObj<T>(defaultValue: T | undefined = undefined): StateOb
 export interface StateObj<T> {
 	value: T | undefined;
 	set: (value: T) => void;
+	setCallback: (setter: (oldValue: T) => T) => void;
 	increment: () => void;
 	decrement: () => void;
 	setTrue: () => void;
