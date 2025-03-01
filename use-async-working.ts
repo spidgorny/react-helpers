@@ -1,7 +1,7 @@
 import { useWorking } from "./use-working.tsx";
 import { useCallback, useState } from "react";
 
-export function useAsyncWorking(code: (e: any) => Promise<any>) {
+export function useAsyncWorking(code: (e: any) => Promise<any>, deps: any[] = []) {
 	const { isWorking, setWorking, wrapWorking } = useWorking();
 	const [error, setError] = useState<Error|null>(null);
 	const workingCode = wrapWorking(code);
@@ -14,7 +14,7 @@ export function useAsyncWorking(code: (e: any) => Promise<any>) {
 			setError(e as Error);
 			setWorking(false);
 		}
-	}, []);
+	}, deps);
 
 	return {
 		isWorking,
